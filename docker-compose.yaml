@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  api:
+    build: ./api
+    container_name: api_c
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./api:/app # maps the api folder to app folder to container
+      # - ./app/node_modules # this creates issue in windows docker
+      - nodemodules:/app/node_modules
+  myblog:
+    build: ./frontend-app
+    container_name: myblog_c
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+volumes:
+  nodemodules:
+# to build the image and run the container:
+# => docker-compose up
+# if you want to ensure that your containers are built with the latest changes defined in your Dockerfiles or Docker Compose file (such as changes to your application code or dependencies), you should include the --build option
+# docker-compose up --build
+
+# to stop the container and delete the container(but image and volumn remains)
+# => docker-compose down
+# to stop the container and delete the container and delete the image and volume as well(use --remi all to delete all the images and use -v to delte the volumn)
+# => docker-compose down --rmi all -v
